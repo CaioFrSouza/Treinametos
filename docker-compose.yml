@@ -1,0 +1,43 @@
+﻿services:
+  site:
+    image: site
+    build:
+      context: .
+      dockerfile: Site/Dockerfile
+      
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+      - authapi
+    ports:
+       - "3000:8080"
+  postgres:
+      image: postgres:15
+      environment:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      ports:
+        - "5432:5432"
+  authapi:
+    image: authapi
+    build:
+      context: .
+      dockerfile: UserApi/Dockerfile
+    environment:
+        - POSTGRES_HOST=postgres
+        - POSTGRES_DB=${POSTGRES_DB}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+    ports:
+        - "3001:8080"
+volumes:
+  postgres_data:
