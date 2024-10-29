@@ -7,7 +7,8 @@ public static class ServicesConfigurations
 {
     public static IServiceCollection AddServiceConfigurations(this IServiceCollection services)
     {
-        services.AddSingleton<IAuthService, AuthService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserService, UserService>();
         return services;
     }
 }

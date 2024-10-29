@@ -29,6 +29,9 @@ public class AuthService:AuthServiceHelper, IAuthService
         var createUser = new AuthUserModel();
         createUser.UserName = user.Username.ToLower();
         createUser.Email = user.Email;
+        createUser.LastName = user.LastName;
+        createUser.FristName = user.FirstName;
+        
         var result =  await _userManager.CreateAsync(createUser, user.Password);
         if (!result.Succeeded)
         {

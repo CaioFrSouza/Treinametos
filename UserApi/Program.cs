@@ -6,9 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddIdentityConfiguration(builder.Configuration);
 builder.Services.AddSwaggerGen();
+builder.Services.AddServiceConfigurations();
 builder.Services.AddControllers();
-
-builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
